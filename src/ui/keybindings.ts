@@ -35,6 +35,7 @@ export const ACTIONS = [
   { id: 'view.automap', label: 'Automap view', group: 'View', key: 'A' },
   { id: 'view.markers', label: 'Object markers', group: 'View', key: 'M' },
   { id: 'view.sprites', label: 'Object sprites', group: 'View', key: 'N' },
+  { id: 'view.animate', label: 'Animate tiles and objects (lava, animated water)', group: 'View', key: 'Shift+N' },
   { id: 'view.paths', label: 'NPC paths', group: 'View', key: 'P' },
   { id: 'view.minimap', label: 'Minimap', group: 'View', key: 'K' },
   { id: 'view.pops', label: 'Roof hiding view', group: 'View', key: 'H' },

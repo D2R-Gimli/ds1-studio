@@ -114,7 +114,7 @@ export function LayersPanel({ map, scene, visibility: v, onChange, keys }: { map
         <Toggle label="Walkable overview" swatch="linear-gradient(90deg, rgb(60,210,90) 50%, rgb(235,50,50) 50%)" checked={v.overview === 'walkable'} onChange={(x) => set({ overview: x ? 'walkable' : null })} />
         <Toggle label="Monster spawns" swatch="linear-gradient(90deg, rgb(60,210,90) 34%, rgb(70,150,255) 34% 67%, rgb(190,90,255) 67%)" checked={v.overview === 'spawn'} onChange={(x) => set({ overview: x ? 'spawn' : null })} />
         <Toggle label="Level light" swatch="linear-gradient(90deg, #2a2a2a, #d8c9a0)" checked={v.light} onChange={(x) => set({ light: x })} />
-        {scene.animated && <Toggle label="Animate floors" checked={v.animate} onChange={(x) => set({ animate: x })} />}
+        <Toggle label={scene.animated ? 'Animate tiles' : 'Animate tiles (none on this map)'} hotkey={keys['view.animate']} checked={v.animate} onChange={(x) => set({ animate: x })} />
       </div>
       <p className="muted small">
         Objects (blue) share the monster toggle. Walkability: amber marks walking restrictions; red marks jump/flight barriers. Space/right-drag to pan,

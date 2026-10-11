@@ -4,6 +4,7 @@ import {
   Box,
   Camera,
   Sun,
+  Waves,
   Eye,
   PanelLeftClose,
   PanelLeftOpen,
@@ -3694,6 +3695,7 @@ export function App() {
       'view.walkable': () => toggleMode('walk'),
       'view.automap': () => toggleMode('automap'),
       'view.markers': vis((v) => ({ ...v, objects: !v.objects })),
+      'view.animate': vis((v) => ({ ...v, animate: !v.animate })),
       'view.sprites': vis((v) => ({ ...v, sprites: !v.sprites })),
       'view.paths': vis((v) => ({ ...v, paths: !v.paths })),
       'layer.floor1': layerToggle('floors', 0),
@@ -3796,6 +3798,8 @@ export function App() {
   paletteState.current = { layers, tileSet };
   const title = map?.path.split('/').pop();
   const noMap = !doc || !map;
+  /** Tiles the map plays as animations (lava, animated water), for the Animate toggle's tooltip. */
+  const animatedTiles = scene ? scene.items.filter((it) => it.frames).length : 0;
   const canWrite = !!data.saveTarget;
   const openTable = (table: string, key?: string) => {
     setTableTarget({ table, key });
@@ -3950,6 +3954,18 @@ export function App() {
             { label: 'Rooms 8×8', icon: <LayoutGrid />, onClick: () => setVisibility((v) => ({ ...v, rooms: !v.rooms })), active: visibility.rooms, disabled: noMap, size: 'sm', shortcut: kb['view.rooms'], title: 'Show the 8×8-tile rooms the game builds the level from' },
             { label: 'Minimap', icon: <MapPinned />, onClick: () => setVisibility((v) => ({ ...v, minimap: !v.minimap })), active: visibility.minimap, disabled: noMap, size: 'sm', shortcut: kb['view.minimap'], title: 'Overview of the whole map in the corner: click it to move there' },
             { label: 'Sprites', icon: <Box />, onClick: () => setVisibility((v) => ({ ...v, sprites: !v.sprites })), active: visibility.sprites, disabled: noMap, size: 'sm', shortcut: kb['view.sprites'], title: 'Draw objects and NPCs as they look in game' },
+            {
+              label: 'Animate',
+              icon: <Waves />,
+              onClick: () => setVisibility((v) => ({ ...v, animate: !v.animate })),
+              active: visibility.animate,
+              disabled: noMap,
+              size: 'sm',
+              shortcut: kb['view.animate'],
+              title: `Play animated tiles (lava, animated water: tiles with frames and the lava flag, as the game plays them at 10 frames a second) and animated objects. ${
+                animatedTiles ? `This map has ${animatedTiles} animated tile${animatedTiles === 1 ? '' : 's'}.` : 'This map has no animated tiles; make some with Map → Animated water….'
+              }`,
+            },
             { label: 'Markers', icon: <Eye />, onClick: () => setVisibility((v) => ({ ...v, objects: !v.objects })), active: visibility.objects, disabled: noMap, size: 'sm', shortcut: kb['view.markers'], title: 'Object and NPC markers' },
             { label: 'As if inside', icon: <EyeOff />, onClick: () => setVisibility((v) => ({ ...v, popsInside: !v.popsInside })), active: visibility.popsInside, disabled: noMap, size: 'sm', shortcut: kb['view.popsInside'], title: 'Hide the roofs of every hide area, as the game does while a player is inside: clicks then reach the floors under them' },
             { label: 'Wall categories…', icon: <BrickWall />, onClick: () => setWallCatsOpen(true), disabled: noMap, size: 'sm', title: 'Which wall tiles count as Upper or Lower walls (the toggles above the map), library by library' },
